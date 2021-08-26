@@ -10,4 +10,7 @@
     <color name="white_color">#F6F5F8</color>
     <color name="light_color">#F5F6F8</color>
     <color name="refresh_icon_color">#D7D7D9</color>
+    <color name="colorPrimary">#1E88F4</color>
+    <color name="colorSecondary">#207FF3</color>
+    <color name="colorPrimaryVariant">#1FA6F8</color>
 </resources>

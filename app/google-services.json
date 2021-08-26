@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "483533158623",
+    "project_id": "translator-c22e4",
+    "storage_bucket": "translator-c22e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483533158623:android:018ef540b3dd00dc53916a",
+        "android_client_info": {
+          "package_name": "com.android.translately"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483533158623-ed6hjdhs4ve9io05rthhsjuccbpb1ida.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.translately",
+            "certificate_hash": "3e67be26d0a3bf43319b3a9e8696b78a0dc4e216"
+          }
+        },
+        {
+          "client_id": "483533158623-g2qj6jiv6hs7eq187qqkv3dir70ovfof.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdiq-i1vzG_xuwYMFD8hDqGwCRIk6SW10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483533158623-g2qj6jiv6hs7eq187qqkv3dir70ovfof.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

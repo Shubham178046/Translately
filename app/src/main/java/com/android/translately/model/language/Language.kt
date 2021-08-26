@@ -1,4 +1,4 @@
-package com.android.translately.model
+package com.android.translately.model.language
 
 open class Language {
     var languageName: String? = ""

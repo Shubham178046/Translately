@@ -1,7 +1,7 @@
 package com.android.translately.util
 
 import android.content.Context
-import com.android.translately.model.Language
+import com.android.translately.model.language.Language
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -9,109 +9,67 @@ open class LanguageUtil {
     companion object {
         var languageCode = arrayOf(
             "af",
-            "ar_ae",
-            "ar_eg",
-            "ar_sa",
-            "az",
+            "ar",
             "be",
             "bg",
             "bn",
-            "bs",
             "ca",
-            "ceb",
-            "cs",
-            "cy",
             "da",
             "de",
             "el",
-            "en_au",
-            "en_uk",
-            "en_us",
+            "en",
             "eo",
-            "es_es",
-            "es_mx",
-            "es_us",
+            "es",
             "et",
-            "eu",
             "fa",
             "fi",
-            "fr_ca",
-            "fr_fr",
+            "fr",
             "ga",
             "gl",
             "gu",
-            "ha",
             "hi",
-            "hmn",
             "hr",
             "ht",
             "hu",
-            "hy",
             "id",
-            "ig",
             "is",
             "it",
-            "iw",
             "ja",
-            "jw",
             "ka",
-            "kk",
-            "km",
-            "kn",
             "ko",
-            "la",
             "lt",
             "lv",
-            "mg",
-            "mi",
             "mk",
-            "ml",
-            "mn",
             "mr",
             "ms",
             "mt",
-            "my",
-            "ne",
             "nl",
             "no",
-            "ny",
-            "pa",
             "pl",
-            "pt_br",
-            "pt_pt",
+            "pt",
             "ro",
             "ru",
-            "si",
             "sk",
             "sl",
-            "so",
             "sq",
-            "sr",
-            "st",
-            "su",
             "sv",
             "sw",
             "ta",
             "te",
-            "tg",
             "th",
             "tl",
             "tr",
             "uk",
             "ur",
-            "uz",
             "vi",
-            "zh_cn",
-            "zh_hk",
-            "zh_tw",
-            "zu"
+            "zh",
         )
 
         open fun getData(context: Context): ArrayList<Language> {
             val arrayList: ArrayList<Language> = ArrayList()
             val strArr: Array<String> = languageCode
             for (str in strArr) {
-                println("Name------------->"+str)
+                println("Name------------->" + str)
                 val language = Language()
                 language.languageCode = str
                 language.languageName = context.getString(
@@ -128,6 +86,21 @@ open class LanguageUtil {
             return arrayList
         }
 
+        fun getLanguageName(code: String, context: Context): String {
+            return context.getString(
+                context.getResources().getIdentifier(code, "string", context.getPackageName())
+            )
+        }
+
+        fun getLanguageImage(code: String, context: Context) : Int
+        {
+           return context.resources.getIdentifier(
+                "flag_" +
+                        code,
+                "drawable",
+                context.packageName
+            )
+        }
         open fun a(): String {
             val lowerCase = Locale.getDefault().toString().toLowerCase()
             val language = Locale.getDefault().language

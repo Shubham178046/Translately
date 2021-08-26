@@ -2,9 +2,9 @@
     <string name="app_name">Translately</string>
     <string name="translate">Translate</string>
     <string name="af">Afrikaans</string>
-    <string name="ar_ae">Arabic (UAE)</string>
-    <string name="ar_eg">Arabic (Egypt)</string>
-    <string name="ar_sa">Arabic (Saudi)</string>
+    <string name="ar">Arabic (UAE)</string>
+    <string name="eg">Arabic (Egypt)</string>
+    <string name="sa">Arabic (Saudi)</string>
     <string name="az">Azerbaijani</string>
     <string name="be">Belarusian</string>
     <string name="bg">Bulgarian</string>
@@ -18,21 +18,16 @@
     <string name="de">German</string>
     <string name="el">Greek</string>
     <string name="en">English</string>
-    <string name="en_au">English (Australia)</string>
-    <string name="en_uk">English (GB)</string>
-    <string name="en_us">English (USA)</string>
+    <string name="au">English (Australia)</string>
+    <string name="us">English (USA)</string>
     <string name="eo">Esperanto</string>
     <string name="es">Spanish</string>
-    <string name="es_es">Spanish (Spain)</string>
-    <string name="es_mx">Spanish (Mexico)</string>
-    <string name="es_us">Spanish (United States)</string>
+    <string name="mx">Spanish (Mexico)</string>
     <string name="et">Estonian</string>
     <string name="eu">Basque</string>
     <string name="fa">Persian</string>
     <string name="fi">Finnish</string>
     <string name="fr">French</string>
-    <string name="fr_ca">French (Canada)</string>
-    <string name="fr_fr">French</string>
     <string name="ga">Irish</string>
     <string name="gl">Galician</string>
     <string name="gu">Gujarati</string>
@@ -73,8 +68,6 @@
     <string name="no_">No</string>
     <string name="ny">Chichewa</string>
     <string name="pt">Portuguese</string>
-    <string name="pt_br">Portuguese (Brazil)</string>
-    <string name="pt_pt">Portuguese (Portugal)</string>
     <string name="pa">Punjabi</string>
     <string name="pl">Polish</string>
     <string name="ro">Romanian</string>
@@ -100,10 +93,11 @@
     <string name="uz">Uzbek</string>
     <string name="vi">Vietnamese</string>
     <string name="zh_cn">Chinese (Mandarin)</string>
-    <string name="zh_cn_short">Chinese (S)</string>
-    <string name="zh_hk">Chinese (Cantonese)</string>
+    <string name="zh">Chinese</string>
     <string name="zh_tw">Chinese (Taiwan)</string>
-    <string name="zh_tw_short">Chinese (T)</string>
     <string name="zu">Zulu</string>
+    <string name="translate_from">Translate From</string>
+    <string name="search_language">Search Language</string>
+    <string name="all_languages">All Languages</string>
 
 </resources>

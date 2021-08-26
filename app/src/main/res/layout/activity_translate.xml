@@ -55,14 +55,13 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="10dp">
+                    app:cardCornerRadius="22dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imglanguage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_baseline_flag_24" />
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitXY" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -73,9 +72,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center_vertical"
-                    android:text="English"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgDropDown"
@@ -87,6 +86,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgSourceMicrophone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -106,6 +106,7 @@
                 android:background="@android:color/transparent"
                 android:inputType="textMultiLine"
                 android:lines="5"
+                android:gravity="start"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,8 +128,8 @@
                 app:layout_constraintTop_toBottomOf="@id/edtTranslateText">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:padding="10dp"
                     android:tint="@color/refresh_icon_color"
                     app:srcCompat="@drawable/refresh" />
@@ -150,14 +151,13 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="10dp">
+                    app:cardCornerRadius="22dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgTranslatedlanguage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@drawable/ic_baseline_flag_24" />
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitXY" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -168,9 +168,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center_vertical"
-                    android:text="Turkey"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgTranslatedDropDown"
@@ -182,6 +182,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgDestinationMicrophone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -199,6 +200,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:lines="5"
+                android:gravity="start"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -206,6 +208,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/llTranslatedLanguage" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgCopy"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
@@ -226,14 +229,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="1dp"
+        android:elevation="8dp"
+        android:gravity="center"
         android:background="@drawable/round_language_background"
         android:paddingStart="25dp"
         android:paddingTop="20dp"
+        android:maxLines="1"
+        android:lines="1"
+        android:ellipsize="end"
         android:paddingEnd="25dp"
         android:paddingBottom="20dp"
-        android:text="English"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/imgMicrophone"
         app:layout_constraintEnd_toStartOf="@+id/imgMicrophone"
         app:layout_constraintStart_toStartOf="parent"
@@ -247,11 +255,16 @@
         android:background="@drawable/round_language_background"
         android:paddingStart="25dp"
         android:paddingTop="20dp"
+        android:lines="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:elevation="8dp"
+        android:gravity="center"
         android:paddingEnd="25dp"
         android:paddingBottom="20dp"
-        android:text="Turkesh"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/imgMicrophone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgMicrophone"
@@ -259,7 +272,9 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgMicrophone"
-        android:layout_width="0dp"
+        android:layout_width="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toStartOf="@+id/txtDestinationLanguage"
