@@ -86,7 +86,7 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
 
     fun initializeRecyclerview(languages: ArrayList<Language>?) {
         adapters =
-            LanguageAdapter(this, languages, object : LanguageAdapter.onClick {
+            /*LanguageAdapter(this, languages, object : LanguageAdapter.onClick {
                 override fun onClick(language: Language) {
                     var bundle = Intent()
                     bundle.putExtra("language_code", language.languageCode)
@@ -94,6 +94,13 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
                     finish()
                     overridePendingTransition(R.anim.stay, R.anim.slide_down)
                 }
+            })*/
+            LanguageAdapter(this , languages,onclick = { language: Language ->
+                var bundle = Intent()
+                bundle.putExtra("language_code", language.languageCode)
+                setResult(code!!, bundle)
+                finish()
+                overridePendingTransition(R.anim.stay, R.anim.slide_down)
             })
         binding.rvLanguageSelection.apply {
             setHasFixedSize(true)

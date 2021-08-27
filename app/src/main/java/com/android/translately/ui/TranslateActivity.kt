@@ -152,8 +152,8 @@ class TranslateActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (p0 != null && p0.isNotEmpty()) {
-                    //getTranslateLanguage(p0.toString(), destinationLanguage!!, sourceLanguage!!)
-                    FirebaseTranslation(p0.toString())
+                    getTranslateLanguage(p0.toString(), destinationLanguage!!, sourceLanguage!!)
+                    //FirebaseTranslation(p0.toString())
                 }
             }
 

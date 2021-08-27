@@ -9,7 +9,7 @@ import com.android.translately.R
 import com.android.translately.databinding.ItemLanguageBinding
 import com.android.translately.model.language.Language
 import java.util.ArrayList
-
+typealias onClick = (language: Language) ->Unit
 class LanguageAdapter(val context: Context, var data: ArrayList<Language>?, val onclick: onClick) :
     RecyclerView.Adapter<LanguageAdapter.ViewHolder>() {
     class ViewHolder(val binding: ItemLanguageBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -34,7 +34,7 @@ class LanguageAdapter(val context: Context, var data: ArrayList<Language>?, val 
                 )
 
                 holder.itemView.setOnClickListener {
-                    onclick.onClick(data!!.get(position))
+                    onclick(data!!.get(position))
                 }
             }
         }
@@ -48,7 +48,7 @@ class LanguageAdapter(val context: Context, var data: ArrayList<Language>?, val 
         data = filterdNames
         notifyDataSetChanged()
     }
-    interface onClick {
+    /*interface onClick {
         fun onClick(language: Language)
-    }
+    }*/
 }

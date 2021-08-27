@@ -14,6 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -26,7 +27,7 @@ object AppModule {
     @Singleton
     @Provides
     @Named("Key")
-    fun getKey() = "39d2241238msh53f7f18a81e38fcp13bd5ajsnfa0684ebc23e"
+    fun getKey() = "db3d36b888msh1775b7ff23c5a02p1eb0b6jsn3c8d4c4a963e"
 
     @Singleton
     @Provides
@@ -71,4 +72,18 @@ object AppModule {
     @Provides
     @Singleton
     fun getApiService(retrofit: Retrofit): LanguageApi = retrofit.create(LanguageApi::class.java)
+
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class KEY
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class HOST
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class BASE_URL
+
 }
