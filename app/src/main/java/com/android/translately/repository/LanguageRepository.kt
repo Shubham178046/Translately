@@ -6,7 +6,7 @@ import com.android.translately.network.LanguageApiImp
 import com.android.translately.util.Resource
 import javax.inject.Inject
 
-class LanguageRepository @Inject constructor(private val apiImp: LanguageApiImp) {
+open class LanguageRepository @Inject constructor(private val apiImp: LanguageApiImp) {
 
     suspend fun getLanguageData(
         query: String,

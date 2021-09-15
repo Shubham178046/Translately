@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Demo/Translately/app/src/main/res/layout/activity_language_selection.xml" value="0.17" />
         <entry key="..\:/Demo/Translately/app/src/main/res/layout/activity_splash.xml" value="0.1" />
-        <entry key="..\:/Demo/Translately/app/src/main/res/layout/activity_translate.xml" value="0.1" />
+        <entry key="..\:/Demo/Translately/app/src/main/res/layout/activity_translate.xml" value="0.15" />
         <entry key="..\:/Demo/Translately/app/src/main/res/layout/item_language.xml" value="0.12771739130434784" />
       </map>
     </option>

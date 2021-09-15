@@ -7,29 +7,36 @@ import android.graphics.Point
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.translately.R
 import com.android.translately.adapter.LanguageAdapter
 import com.android.translately.databinding.ActivityLanguageSelectionBinding
 import com.android.translately.model.language.Language
+import com.android.translately.util.Extentions.getTextChangedListenerStateFlow
 import com.android.translately.util.LanguageUtil
+import com.google.gson.Gson
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
 
-class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
+class LanguageSelectionActivity : AppCompatActivity(), View.OnTouchListener {
     lateinit var adapters: LanguageAdapter
     var code: Int? = -1
     var languages: ArrayList<Language>? = ArrayList<Language>()
 
     private var previousFingerPosition = 0
-    private var baseLayoutPosition : Float = 0f
+    private var baseLayoutPosition: Float = 0f
     private var defaultViewHeight = 0
 
     private var isClosing = false
     private var isScrollingUp = false
     private var isScrollingDown = false
+
     companion object {
         fun launch(context: AppCompatActivity, code: Int) {
             val intent = Intent(context, LanguageSelectionActivity::class.java)
@@ -51,29 +58,72 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
     }
 
     private fun actionListner() {
-        binding.edtSearchLanguage.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+          binding.edtSearchLanguage.addTextChangedListener(object : TextWatcher {
+              override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-            }
+              }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString().trim().length != 0) {
-                    performSearch(s.toString().trim())
-                }
-            }
+              override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                  if (s.toString().trim().length != 0) {
+                      performSearch(s.toString().trim())
+                  }
+              }
 
-            override fun afterTextChanged(s: Editable?) {
-                if (s.isNullOrEmpty()) {
-                    languages = LanguageUtil.getData(this@LanguageSelectionActivity)
-                    initializeRecyclerview(languages)
-                }
-            }
+              override fun afterTextChanged(s: Editable?) {
+                  if (s.isNullOrEmpty()) {
+                      languages = LanguageUtil.getData(this@LanguageSelectionActivity)
+                      initializeRecyclerview(languages)
+                  }
+              }
 
-        })
-
+          })
+     //   setUpSearchStateFlow()
         binding.imgClose.setOnClickListener {
             finish()
             overridePendingTransition(R.anim.stay, R.anim.slide_down)
+        }
+    }
+
+    private fun setUpSearchStateFlow() {
+        CoroutineScope(Dispatchers.Main).launch {
+            binding.edtSearchLanguage.getTextChangedListenerStateFlow().debounce(300)
+                .filter { query ->
+                    if (query.isEmpty()) {
+                        withContext(Dispatchers.Main) {
+                            languages = LanguageUtil.getData(this@LanguageSelectionActivity)
+                            initializeRecyclerview(languages)
+                        }
+                        return@filter false
+                    } else {
+                        return@filter true
+                    }
+                }
+                .distinctUntilChanged()
+                .flatMapLatest { query ->
+                    dataFromNetwork(query)
+                        .catch {
+                            emitAll(flowOf(ArrayList<Language>()))
+                            // emitAll(flowOf(""))
+                        }
+                }
+                .flowOn(Dispatchers.Default)
+                .collect { result ->
+                    adapters.filterList(result)
+                }
+        }
+    }
+
+    private fun dataFromNetwork(query: String): Flow<ArrayList<Language>> {
+        return flow {
+            var data: ArrayList<Language> = ArrayList<Language>()
+            if (languages != null && languages!!.size > 0) {
+                for (i in languages!!) {
+                    if (i.languageName!!.lowercase().contains(query.lowercase())) {
+                        data.add(i)
+                    }
+                }
+            }
+            emit(data)
         }
     }
 
@@ -86,16 +136,16 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
 
     fun initializeRecyclerview(languages: ArrayList<Language>?) {
         adapters =
-            /*LanguageAdapter(this, languages, object : LanguageAdapter.onClick {
-                override fun onClick(language: Language) {
-                    var bundle = Intent()
-                    bundle.putExtra("language_code", language.languageCode)
-                    setResult(code!!, bundle)
-                    finish()
-                    overridePendingTransition(R.anim.stay, R.anim.slide_down)
-                }
-            })*/
-            LanguageAdapter(this , languages,onclick = { language: Language ->
+                /*LanguageAdapter(this, languages, object : LanguageAdapter.onClick {
+                    override fun onClick(language: Language) {
+                        var bundle = Intent()
+                        bundle.putExtra("language_code", language.languageCode)
+                        setResult(code!!, bundle)
+                        finish()
+                        overridePendingTransition(R.anim.stay, R.anim.slide_down)
+                    }
+                })*/
+            LanguageAdapter(this, languages, onclick = { language: Language ->
                 var bundle = Intent()
                 bundle.putExtra("language_code", language.languageCode)
                 setResult(code!!, bundle)
@@ -123,7 +173,7 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
         }
     }
 
-    fun closeDownAndDismissActivity(currentPosition : Float){
+    fun closeDownAndDismissActivity(currentPosition: Float) {
         isClosing = true
         val display = windowManager.defaultDisplay
         val size = Point()
@@ -136,7 +186,7 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
             screenHeight + binding.baseLayout.getHeight()
         )
         positionAnimator.duration = 300
-        positionAnimator.addListener(object : Animator.AnimatorListener{
+        positionAnimator.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator?) {
 
             }
@@ -155,6 +205,7 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
         })
         positionAnimator.start()
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
@@ -166,17 +217,17 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
         when (event.action and MotionEvent.ACTION_MASK) {
             MotionEvent.ACTION_DOWN -> {
                 // save default base layout height
-                defaultViewHeight =  binding.baseLayout.getHeight()
+                defaultViewHeight = binding.baseLayout.getHeight()
 
                 // Init finger and view position
                 previousFingerPosition = Y
-                baseLayoutPosition =  binding.baseLayout.getY()
+                baseLayoutPosition = binding.baseLayout.getY()
             }
             MotionEvent.ACTION_UP -> {
                 // If user was doing a scroll up
                 if (isScrollingUp) {
                     // Reset baselayout position
-                     binding.baseLayout.setY(0F)
+                    binding.baseLayout.setY(0F)
                     // We are not in scrolling up mode anymore
                     isScrollingUp = false
                 }
@@ -184,16 +235,16 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
                 // If user was doing a scroll down
                 if (isScrollingDown) {
                     // Reset baselayout position
-                     binding.baseLayout.setY(0F)
+                    binding.baseLayout.setY(0F)
                     // Reset base layout size
-                     binding.baseLayout.getLayoutParams().height = defaultViewHeight
-                     binding.baseLayout.requestLayout()
+                    binding.baseLayout.getLayoutParams().height = defaultViewHeight
+                    binding.baseLayout.requestLayout()
                     // We are not in scrolling down mode anymore
                     isScrollingDown = false
                 }
             }
             MotionEvent.ACTION_MOVE -> if (!isClosing) {
-                val currentYPosition =  binding.baseLayout.getY()
+                val currentYPosition = binding.baseLayout.getY()
 
                 // If we scroll up
                 if (previousFingerPosition > Y) {
@@ -203,20 +254,20 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
                     }
 
                     // Has user scroll down before -> view is smaller than it's default size -> resize it instead of change it position
-                    if ( binding.baseLayout.getHeight() < defaultViewHeight) {
-                         binding.baseLayout.getLayoutParams().height =
-                             binding.baseLayout.getHeight() - (Y - previousFingerPosition)
-                         binding.baseLayout.requestLayout()
+                    if (binding.baseLayout.getHeight() < defaultViewHeight) {
+                        binding.baseLayout.getLayoutParams().height =
+                            binding.baseLayout.getHeight() - (Y - previousFingerPosition)
+                        binding.baseLayout.requestLayout()
                     } else {
                         // Has user scroll enough to "auto close" popup ?
                         if (baseLayoutPosition - currentYPosition > defaultViewHeight / 4) {
-                         //   closeUpAndDismissDialog(currentYPosition)
+                            //   closeUpAndDismissDialog(currentYPosition)
                             return true
                         }
 
                         //
                     }
-                     binding.baseLayout.setY( binding.baseLayout.getY() + (Y - previousFingerPosition))
+                    binding.baseLayout.setY(binding.baseLayout.getY() + (Y - previousFingerPosition))
                 } else {
 
                     // First time android rise an event for "down" move
@@ -231,10 +282,10 @@ class LanguageSelectionActivity : AppCompatActivity() , View.OnTouchListener {
                     }
 
                     // Change base layout size and position (must change position because view anchor is top left corner)
-                     binding.baseLayout.setY( binding.baseLayout.getY() + (Y - previousFingerPosition))
-                     binding.baseLayout.getLayoutParams().height =
-                         binding.baseLayout.getHeight() - (Y - previousFingerPosition)
-                     binding.baseLayout.requestLayout()
+                    binding.baseLayout.setY(binding.baseLayout.getY() + (Y - previousFingerPosition))
+                    binding.baseLayout.getLayoutParams().height =
+                        binding.baseLayout.getHeight() - (Y - previousFingerPosition)
+                    binding.baseLayout.requestLayout()
                 }
 
                 // Update position

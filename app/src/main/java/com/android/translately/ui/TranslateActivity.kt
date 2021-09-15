@@ -152,8 +152,8 @@ class TranslateActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (p0 != null && p0.isNotEmpty()) {
-                    getTranslateLanguage(p0.toString(), destinationLanguage!!, sourceLanguage!!)
-                    //FirebaseTranslation(p0.toString())
+                    // getTranslateLanguage(p0.toString(), destinationLanguage!!, sourceLanguage!!)
+                    FirebaseTranslation(p0.toString())
                 }
             }
 
@@ -303,6 +303,10 @@ class TranslateActivity : AppCompatActivity() {
                                             _binding.imgSourceMicrophone.visibility = View.GONE
                                             return
                                         }
+                                        if (_binding.imgSourceMicrophone.visibility == View.GONE) {
+                                            _binding.imgSourceMicrophone.visibility =
+                                                View.VISIBLE
+                                        }
                                         textToSpeechSource!!.setLanguage(Locale(sourceLanguage))
                                     } else {
                                         _binding.imgSourceMicrophone.visibility = View.GONE
@@ -336,6 +340,10 @@ class TranslateActivity : AppCompatActivity() {
                                         ) {
                                             _binding.imgDestinationMicrophone.visibility = View.GONE
                                             return
+                                        }
+                                        if (_binding.imgDestinationMicrophone.visibility == View.GONE) {
+                                            _binding.imgDestinationMicrophone.visibility =
+                                                View.VISIBLE
                                         }
                                         textToSpeechDestination!!.setLanguage(
                                             Locale(

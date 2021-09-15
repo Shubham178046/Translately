@@ -5,7 +5,7 @@ import com.android.translately.model.language.Language
 import java.util.*
 import kotlin.collections.ArrayList
 
-open class LanguageUtil {
+class LanguageUtil {
     companion object {
         var languageCode = arrayOf(
             "af",
@@ -65,7 +65,7 @@ open class LanguageUtil {
             "zh",
         )
 
-        open fun getData(context: Context): ArrayList<Language> {
+         fun getData(context: Context): ArrayList<Language> {
             val arrayList: ArrayList<Language> = ArrayList()
             val strArr: Array<String> = languageCode
             for (str in strArr) {
@@ -86,12 +86,13 @@ open class LanguageUtil {
             return arrayList
         }
 
+        @JvmStatic
         fun getLanguageName(code: String, context: Context): String {
             return context.getString(
                 context.getResources().getIdentifier(code, "string", context.getPackageName())
             )
         }
-
+        @JvmStatic
         fun getLanguageImage(code: String, context: Context) : Int
         {
            return context.resources.getIdentifier(
@@ -101,7 +102,7 @@ open class LanguageUtil {
                 context.packageName
             )
         }
-        open fun a(): String {
+         fun a(): String {
             val lowerCase = Locale.getDefault().toString().toLowerCase()
             val language = Locale.getDefault().language
             val strArr: Array<String> = languageCode

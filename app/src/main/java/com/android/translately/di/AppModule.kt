@@ -47,16 +47,6 @@ object AppModule {
         .Builder()
         .build()
 
-    open class Interceptors : Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            var request = chain.request()
-            request = request.newBuilder()
-                .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                .addHeader("Accept-Encoding", "application/gzip")
-                .build()
-            return chain.proceed(request)
-        }
-    }
 
     @Provides
     @Singleton
