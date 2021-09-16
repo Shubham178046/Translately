@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.translately.model.requestModel.LanguageReq
 import com.android.translately.repository.LanguageRepository
+import com.android.translately.util.Extentions.onIO
+import com.android.translately.util.Extentions.onMain
 import com.android.translately.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +32,8 @@ class TranslateViewModel @Inject constructor(private val languageRepository: Lan
         source: String,
         target: String
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
+
+        onIO {
             _conversion.value = TranslateEvent.Loading
             when (val response = languageRepository.getLanguageData(query, target, source)) {
                 is Resource.Error -> {

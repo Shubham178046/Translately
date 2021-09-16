@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,26 +59,26 @@ class LanguageSelectionActivity : AppCompatActivity(), View.OnTouchListener {
     }
 
     private fun actionListner() {
-          binding.edtSearchLanguage.addTextChangedListener(object : TextWatcher {
-              override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        /* binding.edtSearchLanguage.addTextChangedListener(object : TextWatcher {
+             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-              }
+             }
 
-              override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                  if (s.toString().trim().length != 0) {
-                      performSearch(s.toString().trim())
-                  }
-              }
+             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                 if (s.toString().trim().length != 0) {
+                     performSearch(s.toString().trim())
+                 }
+             }
 
-              override fun afterTextChanged(s: Editable?) {
-                  if (s.isNullOrEmpty()) {
-                      languages = LanguageUtil.getData(this@LanguageSelectionActivity)
-                      initializeRecyclerview(languages)
-                  }
-              }
+             override fun afterTextChanged(s: Editable?) {
+                 if (s.isNullOrEmpty()) {
+                     languages = LanguageUtil.getData(this@LanguageSelectionActivity)
+                     initializeRecyclerview(languages)
+                 }
+             }
 
-          })
-     //   setUpSearchStateFlow()
+         })*/
+        setUpSearchStateFlow()
         binding.imgClose.setOnClickListener {
             finish()
             overridePendingTransition(R.anim.stay, R.anim.slide_down)
@@ -89,7 +90,7 @@ class LanguageSelectionActivity : AppCompatActivity(), View.OnTouchListener {
             binding.edtSearchLanguage.getTextChangedListenerStateFlow().debounce(300)
                 .filter { query ->
                     if (query.isEmpty()) {
-                        withContext(Dispatchers.Main) {
+                        withContext(Dispatchers.Main){
                             languages = LanguageUtil.getData(this@LanguageSelectionActivity)
                             initializeRecyclerview(languages)
                         }
@@ -114,6 +115,9 @@ class LanguageSelectionActivity : AppCompatActivity(), View.OnTouchListener {
     }
 
     private fun dataFromNetwork(query: String): Flow<ArrayList<Language>> {
+        if (query.isNullOrEmpty()) {
+            Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show()
+        }
         return flow {
             var data: ArrayList<Language> = ArrayList<Language>()
             if (languages != null && languages!!.size > 0) {

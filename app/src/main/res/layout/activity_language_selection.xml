@@ -77,11 +77,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLanguageSelection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:background="@color/white"
         android:scrollbars="none"
-        tools:listitem="@layout/item_language"
-        app:layout_constraintTop_toBottomOf="@id/txtAllLanguages" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtAllLanguages"
+        tools:listitem="@layout/item_language" />
 </androidx.constraintlayout.widget.ConstraintLayout>
